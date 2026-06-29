@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FC Bayern München — Mia San Mia</title>
+<style>
+  :root {
+    --bayern-red: #dc052d;
+    --bayern-dark: #0a0a0a;
+    --gold: #c9a84c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    font-family: "PingFang SC", "Noto Sans SC", "Helvetica Neue", "Arial", sans-serif;
+    overflow-x: hidden;
+    background: #1a1a1a;
+  }
+
+  /* ══════════ HERO SECTION ══════════ */
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 25% 60%, rgba(220,5,45,0.25) 0%, transparent 55%),
+      radial-gradient(ellipse at 75% 40%, rgba(220,5,45,0.20) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 50%, rgba(30,30,60,1) 0%, #0a0a0a 100%);
+  }
+
+  /* ── large background images ── */
+  .bg-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Bayern crest — left side, large & semi-transparent */
+  .bg-crest {
+    position: absolute;
+    left: -8%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: min(55vw, 700px);
+    height: min(55vw, 700px);
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg/1200px-FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.18;
+    filter: blur(0.5px);
+  }
+
+  /* Musiala — right side */
+  .bg-musiala {
+    position: absolute;
+    right: -3%;
+    bottom: 0;
+    width: min(42vw, 540px);
+    height: min(70vh, 800px);
+    background-image: url('https://img.uefa.com/imgml/TP/players/1/2025/324x324/250134955.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    opacity: 0.55;
+    mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0) 100%);
+  }
+
+  /* subtle texture overlay */
+  .bg-texture {
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.008) 2px, rgba(255,255,255,0.008) 4px),
+      repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.008) 2px, rgba(255,255,255,0.008) 4px);
+  }
+
+  /* ── content ── */
+  .content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 40px 20px;
+  }
+
+  /* small crest above text */
+  .mini-crest {
+    width: 90px;
+    height: 90px;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg/1200px-FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 0 20px rgba(220,5,45,0.5));
+    animation: crestFloat 4s ease-in-out infinite;
+  }
+
+  @keyframes crestFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+
+  /* MIA SAN MIA */
+  .motto {
+    font-size: clamp(48px, 10vw, 100px);
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    color: #fff;
+    text-align: center;
+    line-height: 1.05;
+    text-shadow:
+      0 0 60px rgba(220,5,45,0.7),
+      0 0 120px rgba(220,5,45,0.35),
+      0 4px 8px rgba(0,0,0,0.6);
+    font-style: italic;
+  }
+
+  .motto .red-dot {
+    color: var(--bayern-red);
+    text-shadow:
+      0 0 40px rgba(220,5,45,0.9),
+      0 0 80px rgba(220,5,45,0.5);
+  }
+
+  .subtitle {
+    font-size: 16px;
+    letter-spacing: 0.35em;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+    margin-top: -12px;
+  }
+
+  /* ── squad trigger button ── */
+  .squad-trigger-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: transform 0.25s;
+    margin-top: 8px;
+  }
+  .squad-trigger-wrap:hover { transform: scale(1.06); }
+  .squad-trigger-wrap:active { transform: scale(0.96); }
+
+  .squad-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--bayern-red), #a00420);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+      0 0 30px rgba(220,5,45,0.5),
+      0 8px 24px rgba(0,0,0,0.5);
+    transition: box-shadow 0.3s;
+    position: relative;
+  }
+  .squad-trigger-wrap:hover .squad-icon {
+    box-shadow:
+      0 0 50px rgba(220,5,45,0.8),
+      0 8px 30px rgba(0,0,0,0.6);
+  }
+
+  .squad-icon svg {
+    width: 32px;
+    height: 32px;
+    fill: #fff;
+  }
+
+  /* pulsing ring */
+  .squad-icon::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid rgba(220,5,45,0.6);
+    animation: ringPulse 2s ease-out infinite;
+  }
+  @keyframes ringPulse {
+    0%   { transform: scale(1);   opacity: 0.8; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+
+  .squad-label {
+    font-size: 14px;
+    letter-spacing: 0.25em;
+    color: rgba(255,255,255,0.75);
+  }
+
+  /* ── scroll hint ── */
+  .scroll-hint {
+    position: absolute;
+    bottom: 28px;
+    z-index: 2;
+    color: rgba(255,255,255,0.35);
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    animation: fadeHint 3s ease-in-out infinite;
+  }
+  @keyframes fadeHint {
+    0%, 100% { opacity: 0.25; }
+    50%      { opacity: 0.7; }
+  }
+
+  /* ══════════ SQUAD MODAL ══════════ */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.35s, visibility 0.35s;
+  }
+  .modal-overlay.show {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .modal {
+    background: linear-gradient(180deg, #1c1c1e 0%, #111 100%);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 780px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 72px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.08);
+    transform: translateY(30px);
+    transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .modal-overlay.show .modal {
+    transform: translateY(0);
+  }
+
+  /* modal header */
+  .modal-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: linear-gradient(180deg, #1c1c1e 0%, #1c1c1e 80%, transparent 100%);
+    padding: 28px 32px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .modal-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .modal-crest {
+    width: 48px;
+    height: 48px;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg/1200px-FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .modal-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.04em;
+  }
+  .modal-season {
+    font-size: 13px;
+    color: var(--bayern-red);
+    letter-spacing: 0.15em;
+    font-weight: 600;
+  }
+
+  .modal-close {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.18); }
+
+  /* modal body */
+  .modal-body {
+    padding: 0 32px 32px;
+  }
+
+  /* coach section */
+  .coach-banner {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, rgba(220,5,45,0.15), rgba(220,5,45,0.05));
+    border-radius: 14px;
+    border: 1px solid rgba(220,5,45,0.2);
+  }
+  .coach-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(220,5,45,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .coach-info .coach-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .coach-info .coach-role {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.1em;
+  }
+
+  /* position group */
+  .position-group {
+    margin-top: 20px;
+  }
+  .position-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--bayern-red);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .position-title::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--bayern-red);
+  }
+
+  /* player grid */
+  .player-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+
+  .player-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+    transition: background 0.2s;
+  }
+  .player-card:hover { background: rgba(255,255,255,0.08); }
+
+  .player-num {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(220,5,45,0.3), rgba(220,5,45,0.1));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+    border: 1.5px solid rgba(220,5,45,0.35);
+  }
+  .player-info {
+    min-width: 0;
+  }
+  .player-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .player-nationality {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── responsive ── */
+  @media (max-width: 600px) {
+    .motto { font-size: 42px; }
+    .player-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+    .modal-header { padding: 20px 18px 14px; }
+    .modal-body   { padding: 0 18px 24px; }
+    .bg-crest  { left: -30%; width: 80vw; height: 80vw; }
+    .bg-musiala { right: -15%; width: 65vw; height: 55vh; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero" id="hero">
+  <div class="bg-layer">
+    <div class="bg-crest"></div>
+    <div class="bg-musiala"></div>
+    <div class="bg-texture"></div>
+  </div>
+
+  <div class="content">
+    <div class="mini-crest"></div>
+
+    <h1 class="motto">
+      MIA SAN MIA
+    </h1>
+
+    <p class="subtitle">FC Bayern München</p>
+
+    <!-- squad trigger -->
+    <div class="squad-trigger-wrap" id="squadTrigger" title="查看阵容">
+      <div class="squad-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+      </div>
+      <span class="squad-label">查 看 阵 容</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">▼  Saison 2025/26  ▼</div>
+</section>
+
+<!-- ══════════ SQUAD MODAL ══════════ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-crest"></div>
+        <div>
+          <div class="modal-title">FC Bayern München</div>
+          <div class="modal-season">Saison 2025 / 26 — Kader</div>
+        </div>
+      </div>
+      <button class="modal-close" id="modalClose">&times;</button>
+    </div>
+
+    <div class="modal-body">
+
+      <!-- Coach -->
+      <div class="coach-banner">
+        <div class="coach-icon">🧑‍💼</div>
+        <div class="coach-info">
+          <div class="coach-name">Vincent Kompany</div>
+          <div class="coach-role">HEAD COACH</div>
+        </div>
+      </div>
+
+      <!-- Goalkeepers -->
+      <div class="position-group">
+        <div class="position-title">Torwart · 门将</div>
+        <div class="player-grid">
+          <div class="player-card">
+            <div class="player-num">1</div>
+            <div class="player-info">
+              <div class="player-name">Manuel Neuer</div>
+              <div class="player-nationality">🇩🇪 Deutschland</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">26</div>
+            <div class="player-info">
+              <div class="player-name">Sven Ulreich</div>
+              <div class="player-nationality">🇩🇪 Deutschland</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">18</div>
+            <div class="player-info">
+              <div class="player-name">Daniel Peretz</div>
+              <div class="player-nationality">🇮🇱 Israel</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">40</div>
+            <div class="player-info">
+              <div class="player-name">Jonas Urbig</div>
+              <div class="player-nationality">🇩🇪 Deutschland</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Defenders -->
+      <div class="position-group">
+        <div class="position-title">Abwehr · 后卫</div>
+        <div class="player-grid">
+          <div class="player-card">
+            <div class="player-num">2</div>
+            <div class="player-info">
+              <div class="player-name">Dayot Upamecano</div>
+              <div class="player-nationality">🇫🇷 France</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">3</div>
+            <div class="player-info">
+              <div class="player-name">Kim Min-jae</div>
+              <div class="player-nationality">🇰🇷 South Korea</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">21</div>
+            <div class="player-info">
+              <div class="player-name">Hiroki Ito</div>
+              <div class="player-nationality">🇯🇵 Japan</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">15</div>
+            <div class="player-info">
+              <div class="player-name">Eric Dier</div>
+              <div class="player-nationality">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">19</div>
+            <div class="player-info">
+              <div class="player-name">Alphonso Davies</div>
+              <div class="player-nationality">🇨🇦 Canada</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">23</div>
+            <div class="player-info">
+              <div class="player-name">Sacha Boey</div>
+              <div class="player-nationality">🇫🇷 France</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">44</div>
+            <div class="player-info">
+              <div class="player-name">Josip Stanišić</div>
+              <div class="player-nationality">🇭🇷 Croatia</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">22</div>
+            <div class="player-info">
+              <div class="player-name">Raphaël Guerreiro</div>
+              <div class="player-nationality">🇵🇹 Portugal</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">28</div>
+            <div class="player-info">
+              <div class="player-name">Tarek Buchmann</div>
+              <div class="player-nationality">🇩🇪 Deutschland</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Midfielders -->
+      <div class="position-group">
+        <div class="position-title">Mittelfeld · 中场</div>
+        <div class="player-grid">
+          <div class="player-card">
+            <div class="player-num">6</div>
+            <div class="player-info">
+              <div class="player-name">Joshua Kimmich</div>
+              <div class="player-nationality">🇩🇪 Deutschland</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">8</div>
+            <div class="player-info">
+              <div class="player-name">Leon Goretzka</div>
+              <div class="player-nationality">🇩🇪 Deutschland</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">27</div>
+            <div class="player-info">
+              <div class="player-name">Konrad Laimer</div>
+              <div class="player-nationality">🇦🇹 Austria</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">45</div>
+            <div class="player-info">
+              <div class="player-name">Aleksandar Pavlović</div>
+              <div class="player-nationality">🇩🇪 Deutschland</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">16</div>
+            <div class="player-info">
+              <div class="player-name">João Palhinha</div>
+              <div class="player-nationality">🇵🇹 Portugal</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">42</div>
+            <div class="player-info">
+              <div class="player-name">Jamal Musiala</div>
+              <div class="player-nationality">🇩🇪 Deutschland</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forwards -->
+      <div class="position-group">
+        <div class="position-title">Sturm · 前锋</div>
+        <div class="player-grid">
+          <div class="player-card">
+            <div class="player-num">9</div>
+            <div class="player-info">
+              <div class="player-name">Harry Kane</div>
+              <div class="player-nationality">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">11</div>
+            <div class="player-info">
+              <div class="player-name">Kingsley Coman</div>
+              <div class="player-nationality">🇫🇷 France</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">7</div>
+            <div class="player-info">
+              <div class="player-name">Serge Gnabry</div>
+              <div class="player-nationality">🇩🇪 Deutschland</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">10</div>
+            <div class="player-info">
+              <div class="player-name">Leroy Sané</div>
+              <div class="player-nationality">🇩🇪 Deutschland</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">39</div>
+            <div class="player-info">
+              <div class="player-name">Mathys Tel</div>
+              <div class="player-nationality">🇫🇷 France</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">17</div>
+            <div class="player-info">
+              <div class="player-name">Michael Olise</div>
+              <div class="player-nationality">🇫🇷 France</div>
+            </div>
+          </div>
+          <div class="player-card">
+            <div class="player-num">25</div>
+            <div class="player-info">
+              <div class="player-name">Thomas Müller</div>
+              <div class="player-nationality">🇩🇪 Deutschland</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  const overlay   = document.getElementById('modalOverlay');
+  const trigger   = document.getElementById('squadTrigger');
+  const closeBtn  = document.getElementById('modalClose');
+
+  function openModal() {
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  trigger.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('show')) closeModal();
+  });
+</script>
+
+</body>
+</html>
